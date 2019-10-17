@@ -1,67 +1,70 @@
-var taxaMinima = 1.84;
+var taxaMinima = 2;
 
 
 var camposPagina = [
-    ["#debito_visa_master", "#debito_elo", "#debito_hipercard"],
-    ["#credito_a_vista_visa_master", "#credito_a_vista_elo", "#credito_a_vista_hipercard"],
-    ["#credito_1_a_6x_visa_master", "#credito_1_a_6x_elo", "#credito_1_a_6x_hipercard"],
-    ["#credito_7_a_12x_visa_master", "#credito_7_a_12x_elo", "#credito_7_a_12x_hipercard"],
-    ["#taxa_antecipacao"]
+    "",
+    "#debito_visa_master",
+    "#credito_a_vista_visa_master",
+    "#credito_1_a_6x_visa_master",
+    "#credito_7_a_12x_visa_master"
+];
 
+var valorPorPagina = [
+    700,
+    150,
+    100,
+    50
 ];
 
 function calculaSomaTaxasPagina(pagina){
-    var somaTaxasPagina = 0;
-
-    for(i=0; i<camposPagina[pagina].length; i++){
-        somaTaxasPagina += parseFloat($(camposPagina[pagina][i]).val().replace("%",""))
-    }
-
-    return somaTaxasPagina;
+    return parseFloat($(camposPagina[pagina]).val().replace("%",""));
 }
 
 function calculaTaxaMinimaPagina(pagina, proximaPagina){
-    var somaTaxasPaginaAtual = calculaSomaTaxasPagina(pagina);
+   
+    var valorPagina = 0;
+    var valorMinimoPorPagina = 0;
 
-    var taxaMinimaPorPagina = taxaMinima * camposPagina[pagina].length;
 
-    var diferenca = taxaMinimaPorPagina - somaTaxasPaginaAtual;
+    for(i=1; i<=pagina; i++){
+        valorPagina += (calculaSomaTaxasPagina(i) / 100) * valorPorPagina[i];
+
+        valorMinimoPorPagina += (taxaMinima / 100) * valorPorPagina[i] ;
+    }
+
+    var diferenca = valorMinimoPorPagina - valorPagina;
 
     if(diferenca > 0){
-        var somaTaxasProximaPagina = calculaSomaTaxasPagina(proximaPagina);
 
-        var taxaMinimaProximaPagina = taxaMinima * camposPagina[proximaPagina].length;
+        var valorProximaPagina = (calculaSomaTaxasPagina(i)/100) * valorPorPagina[proximaPagina];
 
-        var incremento = (taxaMinimaProximaPagina + diferenca) - somaTaxasProximaPagina;
+        if(valorProximaPagina - ((taxaMinima / 100) * valorPorPagina[proximaPagina] ) < diferenca){
 
-        if(incremento > 0){
+            var incremento = diferenca / valorPorPagina[proximaPagina];
 
-            for(i=0; i<camposPagina[proximaPagina].length; i++){
-                var novoValor = 
-                        parseFloat($(camposPagina[proximaPagina][i]).val().replace("%",""))
-                        +
-                        (incremento/camposPagina[proximaPagina].length)
+            var novoValor = 
+                    parseFloat($(camposPagina[proximaPagina]).val().replace("%",""))
+                    +
+                    (incremento)
 
-                if(novoValor%0.01 > 0){
-                    novoValor=novoValor+0.01;
-                }
-                $(camposPagina[proximaPagina][i]).val(
-                    (
-                      novoValor  
-                    ).toFixed(2)+"%"
-                );
+            if(novoValor%0.01 > 0){
+                novoValor=novoValor+0.01;
             }
+            $(camposPagina[proximaPagina]).val(
+                (
+                  novoValor  
+                ).toFixed(2)+"%"
+            );
+            
         }
     }  
 }
 
 function populaContrato(){
-    for(i = 0; i<camposPagina.length; i++){
-        for(j=0; j<camposPagina[i].length; j++){
-            $(camposPagina[i][j]+"-val").html(
-                 $(camposPagina[i][j]).val()
-            )
-        }
+    for(i = 1; i<camposPagina.length; i++){
+        $(camposPagina[i]+"-val").html(
+             $(camposPagina[i]).val()
+        )
     }
     $("#antecipacao_automatica-val").html(
          $("#antecipacao_automatica").is(':checked')?
@@ -86,9 +89,9 @@ $(function(){
             current : 'Current'
         },
         onStepChanging: function (event, currentIndex, newIndex) { 
-            if(currentIndex<newIndex && newIndex < camposPagina.length){
+            if(currentIndex<newIndex && newIndex < camposPagina.length && currentIndex > 0 ){
                 calculaTaxaMinimaPagina(currentIndex, newIndex);
-            }else if(newIndex == camposPagina.length){
+            }else if(newIndex == camposPagina.length+1){
                 populaContrato();
             }
             
@@ -97,6 +100,9 @@ $(function(){
         enableFinishButton: false,
         forceMoveForward: false
     });
-    $(":text").mask('0.00%', {reverse: true});
+    $(".percent").mask('0.00%', {reverse: true});
+    $(".money").mask('#.##0', {reverse: true});
+    valorPorPagina[0] = parseFloat($("#valor_debito").val().replace(".",""));
+    valorPorPagina[1] = parseFloat($("#valor_credito_a_vista").val().replace(".",""));
 
 });
