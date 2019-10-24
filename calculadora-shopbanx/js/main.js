@@ -10,6 +10,7 @@ var camposPagina = [
 ];
 
 var valorPorPagina = [
+    0,
     700,
     150,
     100,
@@ -55,6 +56,7 @@ function calculaTaxaMinimaPagina(pagina, proximaPagina){
                   novoValor  
                 ).toFixed(2)+"%"
             );
+            $(camposPagina[proximaPagina]).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
             
         }
     }  
@@ -74,35 +76,32 @@ function populaContrato(){
 }
 
 $(function(){
-    $("#form-total").steps({
-        headerTag: "h2",
-        bodyTag: "section",
-        transitionEffect: "fade",
-        enableAllSteps: false,
-        autoFocus: true,
-        transitionEffectSpeed: 500,
-        titleTemplate : '<span class="title">#title#</span>',
-        labels: {
-            previous : 'Anterior',
-            next : 'Próximo',
-            finish : 'Validar',
-            current : 'Current'
-        },
-        onStepChanging: function (event, currentIndex, newIndex) { 
-            if(currentIndex<newIndex && newIndex < camposPagina.length && currentIndex > 0 ){
-                calculaTaxaMinimaPagina(currentIndex, newIndex);
-            }else if(newIndex == camposPagina.length+1){
-                populaContrato();
-            }
-            
-            return true;
-        },
-        enableFinishButton: false,
-        forceMoveForward: false
-    });
-    $(".percent").mask('0.00%', {reverse: true});
+    
+    $(".percent").mask('0,##%', {reverse: true});
     $(".money").mask('#.##0', {reverse: true});
     valorPorPagina[0] = parseFloat($("#valor_debito").val().replace(".",""));
     valorPorPagina[1] = parseFloat($("#valor_credito_a_vista").val().replace(".",""));
+    
+    $("#debito_visa_master").on(
+        "blur", 
+        function(){
+            calculaTaxaMinimaPagina(1, 2);
+        }
+    );
 
+    $("#credito_a_vista_visa_master").on(
+        "blur", 
+        function(){
+            calculaTaxaMinimaPagina(2, 3);
+        }
+    );
+
+    $("#credito_1_a_6x_visa_master").on(
+        "blur", 
+        function(){
+            calculaTaxaMinimaPagina(3, 4);
+        }
+    );
+
+    
 });

@@ -28,9 +28,17 @@
 				</div>
 		        <form class="form-register" action="#" method="post">
 		        	<div id="form-total">
-		        		<h2>V</h2>
 			            <section>
-			            	<b>Faturamento médio</b>
+			            	<b>Margem de contribuição:</b>
+			                <div class="inner">
+								<div class="form-row table-responsive">
+									<div class="form-holder">
+										<label for="exampleInputEmail1">MÉDIA</label>
+										<input disabled type="text" value="0.80%" class="form-control percent" id="margem_contribuicao_media">
+									</div>
+								</div>
+							</div>
+							<b>Faturamento médio</b>
 			                <div class="inner">
 								<div class="form-row table-responsive">
 									<div class="form-holder">
@@ -51,57 +59,42 @@
 									</div>
 								</div>
 							</div>
-			            </section>
-			            <h2>D</h2>
-			            <section>
 			            	<b>Taxas para Débito</b>
 			                <div class="inner">
 								<div class="form-row table-responsive">
 									<div class="form-holder">
 										<label for="exampleInputEmail1">VISA/MASTER</label>
-										<input type="text" value="2%" class="form-control percent" id="debito_visa_master">
+										<input type="text" value="200%" class="form-control percent" id="debito_visa_master">
 									</div>
 								</div>
 							</div>
-			            </section>
-			            <h2>C</h2>
-			            <section>
 			            	<b>Taxas para Credito a Vista</b>
 			                <div class="inner">
 								<div class="form-row table-responsive">
 									<div class="form-holder">
 										<label for="exampleInputEmail1">VISA/MASTER</label>
-										<input type="text" value="2%" class="form-control percent" id="credito_a_vista_visa_master">
+										<input type="text" value="200%" class="form-control percent" id="credito_a_vista_visa_master">
 									</div>
 								</div>
 							</div>
-			            </section>
-			            <h2>PC</h2>
-			             <section>
 			            	<b>Taxas para Credito de 1x a 6x</b>
 			                <div class="inner">
 								<div class="form-row table-responsive">
 									<div class="form-holder">
 										<label for="exampleInputEmail1">VISA/MASTER</label>
-										<input type="text" value="2%" class="form-control percent" id="credito_1_a_6x_visa_master">
+										<input type="text" value="200%" class="form-control percent" id="credito_1_a_6x_visa_master">
 									</div>
 								</div>
 							</div>
-			            </section>
-			            <h2>PL</h2>
-			             <section>
 			            	<b>Taxas para Credito de 7x a 12x</b>
 			                <div class="inner">
 								<div class="form-row table-responsive">
 									<div class="form-holder">
 										<label for="exampleInputEmail1">VISA/MASTER</label>
-										<input type="text" value="2%" class="form-control percent" id="credito_7_a_12x_visa_master">
+										<input type="text" value="200%" class="form-control percent" id="credito_7_a_12x_visa_master">
 									</div>
 								</div>
 							</div>
-			            </section>
-			            <h2>A</h2>
-			             <section>
 			            	<b>Taxa de Antecipação</b>
 			                <div class="inner">
 								<div class="form-row table-responsive">
@@ -111,88 +104,8 @@
 									</div>
 									<div class="form-holder">
 										<label for="taxa_antecipacao">Taxa para antecipação</label>
-										<input type="text" value="2%" class="form-control" id="taxa_antecipacao">
+										<input type="text" value="200%" class="form-control" id="taxa_antecipacao">
 									</div>
-								</div>
-							</div>
-			            </section>
-			            <h2>R</h2>
-			             <section>
-			                <div class="inner">
-							 	<b>Débito</b>
-								<div class="form-row table-responsive">
-									<table class="table">
-										<tbody>
-											<tr>
-												<th>VISA/MASTER:</th>
-											</tr>
-											<tr>
-												<td id="debito_visa_master-val">2%</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<div class="inner">
-							 	<b>Crédito a Vista</b>
-								<div class="form-row table-responsive">
-									<table class="table">
-										<tbody>
-											<tr>
-												<th>VISA/MASTER:</th>
-											</tr>
-											<tr>
-												<td id="credito_a_vista_visa_master-val">2%</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<div class="inner">
-							 	<b>Crédito Parcelado de 1x a 6x</b>
-								<div class="form-row table-responsive">
-									<table class="table">
-										<tbody>
-											<tr>
-												<th>VISA/MASTER:</th>
-											</tr>
-											<tr>
-												<td id="credito_1_a_6x_visa_master-val">2%</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<div class="inner">
-							 	<b>Crédito Parcelado de 7x a 12x</b>
-								<div class="form-row table-responsive">
-									<table class="table">
-										<tbody>
-											<tr>
-												<th>VISA/MASTER:</th>
-											</tr>
-											<tr>
-												<td id="credito_7_a_12x_visa_master-val">2%</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<div class="inner">
-							 	<b>Antecipação</b>
-								<div class="form-row table-responsive">
-									<table class="table">
-										<tbody>
-											<tr>
-												<th>TAXA</th>
-												<th>AUTOMÁTICA</th>
-											</tr>
-											<tr>
-												<td id="taxa_antecipacao-val">1.99%</td>
-												<td id="antecipacao_automatica-val">Sim</td>
-											</tr>
-										</tbody>
-									</table>
 								</div>
 							</div>
 			            </section>
